@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "..\\src\\App.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\r\n\tlet search = '';\r\n\tlet loading = false;\r\n\tconst API_URL = 'https://api.giphy.com/v1/gifs/search?api_key=JnxTmEGKXjZeUKBzRjTQoMDg8OX8pS5U&rating=pg&q=';\r\n\r\n\tlet gifs = [];\r\n\r\n\tasync function formSubmitted(event) {\r\n\t\tevent.preventDefault();\r\n\t\tloading = true;\r\n\t\tgifs = [];\r\n\t\tconst url = `${API_URL}${search}`;\r\n\t\tconst response = await fetch(url);\r\n\t\tconst json = await response.json();\r\n\t\tgifs = json.data.map(gif => gif.images.fixed_height.url);\r\n\t\tloading = false;\r\n\t}\r\n</script>\r\n\r\n<style>\r\n.results {\r\n\tcolumn-count: 3;\r\n}\r\n\r\nimg {\r\n\twidth: 100%;\r\n\theight: auto;\r\n}\r\n</style>\r\n\r\n<form on:submit={formSubmitted}>\r\n\t<label for=\"search\">Search</label>\r\n\t<input bind:value={search} id=\"search\" name=\"search\" />\r\n\t<button type=\"submit\">GO</button>\r\n</form>\r\n\r\n{#if loading}\r\n\t<img alt=\"loading\" src=\"https://media2.giphy.com/media/l3nWhI38IWDofyDrW/giphy.gif?cid=790b76115d055ab7424f75514dcb4d7a&rid=giphy.gif\" />\r\n{/if}\r\n\r\n<div class=\"results\">\r\n\t{#each gifs as gif}\r\n\t\t<img alt=\"gif\" src={gif} />\r\n\t{/each}\r\n</div>\r\n\r\n"
+  ],
+  "names": [],
+  "mappings": "AAoBA,QAAQ,cAAC,CAAC,AACT,YAAY,CAAE,CAAC,AAChB,CAAC,AAED,GAAG,cAAC,CAAC,AACJ,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,AACb,CAAC"
+}
